@@ -1,0 +1,27 @@
+[
+  {
+    "question": "How many pepole fit into renoi cleo? 1",
+    "type": "singleOption",
+    "options": [
+      { "label": "1", "value": "10" },
+      { "label": "2", "value": "20" },
+      { "label": "3", "value": "30", "correct": true },
+      { "label": "4", "value": "40" }
+    ]
+  },
+  {
+    "question": "How many pepole fit into renoi cleo? 2",
+    "type": "multiOption",
+    "options": [
+      { "label": "1", "value": "10", "correct": true },
+      { "label": "2", "value": "12" },
+      { "label": "3", "value": "13", "correct": true },
+      { "label": "4", "value": "55" }
+    ]
+  },
+  {
+    "question": "How many pepole fit into renoi cleo? 3",
+    "type": "boolean",
+    "answer": false
+  }
+]
