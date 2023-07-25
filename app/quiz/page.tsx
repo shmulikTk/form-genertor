@@ -36,13 +36,13 @@ export default function Quiz() {
   }, [questionScore]);
 
   const OptionsMapped = (item: JsonForm) => {
-    if (item.type === 'singleOption') {
+    if (item?.type === 'singleOption') {
       return <SingleOption handleScore={handleScore} question={item.question} options={item.options as Options[]}/>
     }
-    if (item.type === 'boolean') {
+    if (item?.type === 'boolean') {
       return <BooleanOption handleScore={handleScore} question={item.question} answer={item.answer}/>
     }
-    if (item.type === 'multiOption') {
+    if (item?.type === 'multiOption') {
       return <MultiOption handleScore={handleMultiOptionScore} question={item.question} options={item.options}/>
     }
   }
