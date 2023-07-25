@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 interface IQuestionScore {
   questionNumber: number;
   score: number;
+  answered: boolean;
 }
 
 export default function Quiz() {
@@ -24,7 +25,7 @@ export default function Quiz() {
   const [questionScore, setQuestionScore] = useState<IQuestionScore[]>([]); 
 
   useEffect(() => {
-    const array = Array.apply(null, Array(json.length)).map(function (x, i) { return {questionNumber: i, score: 0}; })
+    const array = Array.apply(null, Array(json.length)).map(function (x, i) { return {questionNumber: i, score: 0, answered: false}; })
     setQuestionScore(array);
   }, [json]);
 
@@ -60,7 +61,7 @@ export default function Quiz() {
         if (isCorrect) {
           p = point
         }
-        qs[obj] = { ...questionScore[obj], score: p };
+        qs[obj] = { ...questionScore[obj], score: p, answered: true };
         setQuestionScore(qs);
       }
     }
@@ -80,13 +81,22 @@ export default function Quiz() {
       } else if (correct === 'half') {
         p = point / 2; 
       }
-      qs[obj] = { ...questionScore[obj], score: p };
+      qs[obj] = { ...questionScore[obj], score: p, answered: true };
       setQuestionScore(qs);
     }
   }
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-10">
+      <div className='flex flex-row gap-2'>
+        {questionScore.map((item, index) => {
+          return (
+            <div key={index} className='flex flex-row gap-2'>
+              <div className={`h-6 w-6 border-2 border-black ${item.answered && 'bg-green-500'}`} />
+            </div>
+          )
+        })}
+      </div>
       <div className='flex flex-col items-center w-[600px] h-[450px] bg-white rounded-lg shadow-2xl relative p-6'>
         {OptionsMapped(json[questionNumber])}
          <Button className='absolute left-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev - 1)} disabled={questionNumber === 0}>{'<'}</Button>
