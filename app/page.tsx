@@ -1,10 +1,10 @@
 'use client'
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { useAtom } from 'jotai'
 import { JsonQuizAtom } from '@/lib/atoms';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
 
 export default function Home() {
 
@@ -14,9 +14,21 @@ export default function Home() {
   
   const handleSubmit = () => {
     if (textAreaRef.current) {
-      setJson(JSON.parse(textAreaRef.current.value));
       router.push('/quiz')
     }
+  }
+
+  const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const fileReader = new FileReader();
+      const file = e.target.files[0];
+      fileReader.onloadend = () => {
+        const data = fileReader.result;
+        setJson(JSON.parse(data as string));
+      }
+      fileReader.readAsText(file);
+    }
+    
   }
   
   return (
@@ -24,8 +36,10 @@ export default function Home() {
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         Form Generator
       </h1>
-      <div className='w-full flex flex-col gap-3'>
-        <Textarea ref={textAreaRef} className='h-60' />
+      <div className='flex flex-col justify-center gap-3 w-[600px] h-[450px] bg-white rounded-lg shadow-2xl p-6'>
+        <div className="grid w-full items-center gap-1.5">
+          <Input id="picture" type="file" accept="application/JSON" onChange={handleInputFile} />
+        </div>
         <Button onClick={handleSubmit}>submit</Button>
       </div>
     </main>
