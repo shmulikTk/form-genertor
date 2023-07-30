@@ -16,7 +16,7 @@ export default function Home() {
   const router = useRouter();
   
   const handleSubmit = () => {
-    // router.push('/quiz');
+    router.push('/quiz');
   }
 
   const handleInputFile = (e: ChangeEvent<HTMLInputElement>) => {
