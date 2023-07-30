@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Options } from "@/lib/types";
-import { ChangeEvent, FormEvent, MouseEventHandler, Ref, RefAttributes, useRef, useState } from "react";
+import { useState } from "react";
 
 interface ISingleOption {
     question: string;
@@ -13,7 +13,6 @@ interface ISingleOption {
 const SingleOption = ({question, options, handleScore}: ISingleOption) => {
 
     const [selectedAnswer, setSelectedAnswer] = useState('');
-    const [numOfSubmit, setNumOfSubmit] = useState(0);
 
     const handleSubmit = () => {
         const isCorrect= options.findIndex((option) => option.value === selectedAnswer && option.correct === true);
@@ -22,7 +21,6 @@ const SingleOption = ({question, options, handleScore}: ISingleOption) => {
         } else {
             handleScore('singleOption', false);
         }
-        setNumOfSubmit((prev) => prev + 1);
     }
 
     const handleRadioGroupOnChange = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -38,14 +36,14 @@ const SingleOption = ({question, options, handleScore}: ISingleOption) => {
                     {options?.map((option) => {
                         return (
                             <div key={option.label} className="flex items-center space-x-2">
-                                <RadioGroupItem value={option.value} id={option.label} />
+                                <RadioGroupItem  value={option.value} id={option.label} />
                                 <Label htmlFor={option.label}>{option.value}</Label>
                             </div>
                         )
                     })}
                 </div>
             </RadioGroup>
-            <Button onClick={handleSubmit}>submit</Button>
+            <Button variant={"secondary"} onClick={handleSubmit}>submit</Button>
         </div>
     )
 }

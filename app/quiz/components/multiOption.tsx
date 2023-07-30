@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Options } from "@/lib/types";
 import { CheckedState } from "@radix-ui/react-checkbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface IMultiOption {
     question: string;
@@ -61,7 +59,7 @@ const MultiOption = ({question, options, handleScore}: IMultiOption) => {
                     )
                 })}
             </div>
-            <Button onClick={handleSubmit}>submit</Button>
+            <Button variant={"secondary"} onClick={handleSubmit}>submit</Button>
         </div>
     )
 }

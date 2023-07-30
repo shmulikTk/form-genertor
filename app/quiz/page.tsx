@@ -41,7 +41,7 @@ export default function Quiz() {
       return <SingleOption handleScore={handleScore} question={item.question} options={item.options as Options[]}/>
     }
     if (item?.type === 'boolean') {
-      return <BooleanOption handleScore={handleScore} question={item.question} answer={item.answer}/>
+      return <BooleanOption handleScore={handleScore} question={item.question} />
     }
     if (item?.type === 'multiOption') {
       return <MultiOption handleScore={handleMultiOptionScore} question={item.question} options={item.options}/>
@@ -87,22 +87,23 @@ export default function Quiz() {
   }
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-10">
+    <main className="flex flex-col items-center justify-between p-24 gap-10">
       <div className='flex flex-row gap-2'>
         {questionScore.map((item, index) => {
           return (
-            <div key={index} className='flex flex-row gap-2'>
-              <div className={`h-6 w-6 border-2 border-black ${item.answered && 'bg-green-500'}`} />
+            <div key={index} className='flex flex-row items-center gap-2'>
+              <div onClick={() => setQuestionNumber(index)} className={`cursor-pointer h-6 w-6 border-[1px] border-black rounded-md flex flex-row items-center justify-center ${item.answered ? (index === questionNumber ? 'bg-green-700' : 'bg-green-400') : (index === questionNumber ? 'bg-slate-700' : 'bg-slate-400')}`}>{index + 1}</div>
+              <div></div>
             </div>
           )
         })}
       </div>
       <div className='flex flex-col items-center w-[600px] h-[450px] bg-white rounded-lg shadow-2xl relative p-6'>
         {OptionsMapped(json[questionNumber])}
-         <Button className='absolute left-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev - 1)} disabled={questionNumber === 0}>{'<'}</Button>
-         <Button className='absolute right-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev + 1)} disabled={questionNumber === json.length - 1}>{'>'}</Button>
+         {/* <Button className='absolute left-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev - 1)} disabled={questionNumber === 0}>{'<'}</Button>
+         <Button className='absolute right-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev + 1)} disabled={questionNumber === json.length - 1}>{'>'}</Button> */}
       </div>
-      <Button onClick={() =>router.push('/score')}>Done</Button>
+      <Button variant={"secondary"} onClick={() =>router.push('/score')}>Done</Button>
     </main>
   )
 }
