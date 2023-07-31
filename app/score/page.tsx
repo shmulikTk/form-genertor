@@ -8,7 +8,7 @@ export default function Score() {
 
   const [score] = useAtom(ScoreAtom); 
 
-    const router = useRouter();
+  const router = useRouter();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 gap-10">
@@ -16,7 +16,7 @@ export default function Score() {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
             SCORE
         </h1>
-        <div>{Math.floor(score)}</div>
+        <div>{score}</div>
       </div>
       <Button onClick={() =>router.push('/')}>Home</Button>
     </main>

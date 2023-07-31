@@ -1,0 +1,54 @@
+{
+  "scores": [
+    {
+      "id": 1,
+      "user": "one",
+      "score": "50"
+    },
+    {
+      "id": 2,
+      "user": "two",
+      "score": "60"
+    },
+    {
+      "id": 3,
+      "user": "three",
+      "score": "70"
+    },
+    {
+      "id": 4,
+      "user": "four",
+      "score": "80"
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 0,
+      "id": 5
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 100,
+      "id": 6
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 83.33333333333334,
+      "id": 7
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 33,
+      "id": 8
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 33,
+      "id": 9
+    },
+    {
+      "user": "shmulik reihani",
+      "score": 0,
+      "id": 10
+    }
+  ]
+}

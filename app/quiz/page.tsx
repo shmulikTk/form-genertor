@@ -8,7 +8,8 @@ import MultiOption from './components/multiOption';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { JsonForm, Options } from '@/lib/types';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface IQuestionScore {
   questionNumber: number;
@@ -18,6 +19,14 @@ interface IQuestionScore {
 
 export default function Quiz() {
 
+
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/signIn?callbackUrl=/quiz')
+    }
+  })
+  
   const router = useRouter();
   const [json, setJson] = useAtom(JsonQuizAtom); 
   const [score, setScore] = useAtom(ScoreAtom); 
@@ -25,6 +34,7 @@ export default function Quiz() {
   const [questionScore, setQuestionScore] = useState<IQuestionScore[]>([]); 
 
   useEffect(() => {
+    if (json.length === 0) router.push('/');
     const array = Array.apply(null, Array(json.length)).map(function (x, i) { return {questionNumber: i, score: 0, answered: false}; })
     setQuestionScore(array);
   }, [json]);
@@ -33,7 +43,7 @@ export default function Quiz() {
     const sum = questionScore.reduce((accumulator, object) => {
       return accumulator + object.score;
     }, 0);
-    setScore(sum);
+    setScore(Math.floor(sum));
   }, [questionScore]);
 
   const OptionsMapped = (item: JsonForm) => {
@@ -85,6 +95,22 @@ export default function Quiz() {
       setQuestionScore(qs);
     }
   }
+
+  const handleDone = async () => {
+    const postScore = await fetch('http://localhost:3004/scores', {
+      method: 'POST',
+      body: JSON.stringify({ user: session?.user?.name, score }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const res = postScore.json();
+    res.then((data) => {
+      router.push('/score');
+    }).catch((error) => {
+      console.log({error});
+    })    
+  }
   
   return (
     <main className="flex flex-col items-center justify-between p-24 gap-10">
@@ -103,7 +129,7 @@ export default function Quiz() {
          {/* <Button className='absolute left-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev - 1)} disabled={questionNumber === 0}>{'<'}</Button>
          <Button className='absolute right-[-20px] top-[225px] rounded-full' onClick={() => setQuestionNumber((prev) => prev + 1)} disabled={questionNumber === json.length - 1}>{'>'}</Button> */}
       </div>
-      <Button variant={"secondary"} onClick={() =>router.push('/score')}>Done</Button>
+      <Button variant={"secondary"} onClick={handleDone}>Done</Button>
     </main>
   )
 }

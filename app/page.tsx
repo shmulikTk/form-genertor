@@ -31,7 +31,6 @@ export default function Home() {
         if (ans?.status === 'ok') {
           setJson(JSON.parse(data));
         } else {
-          console.log(ans?.message);
           toast({
             variant: "destructive",
             title: "JSON file error",
